@@ -3,6 +3,8 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 include("../conexao.php");
+include("../includes/header.php");
+include("../includes/menu.php");
 
 $sql = "SELECT * FROM clientes";
 $resultado = mysqli_query($conexao, $sql);
@@ -12,26 +14,32 @@ if (!$resultado) {
 }
 ?>
 
-<h1>Lista de Clientes</h1>
+<div class="container">
+    <h2>Lista de Clientes</h2>
 
-<?php
+    <a class="link-botao" href="cadastrar_cliente.php">+ Novo Cliente</a>
 
-if (mysqli_num_rows($resultado) > 0) {
+    <?php if (mysqli_num_rows($resultado) > 0) { ?>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Telefone</th>
+            </tr>
 
-    while ($cliente = mysqli_fetch_assoc($resultado)) {
+            <?php while ($cliente = mysqli_fetch_assoc($resultado)) { ?>
+                <tr>
+                    <td><?php echo $cliente["id_cliente"]; ?></td>
+                    <td><?php echo $cliente["nome"]; ?></td>
+                    <td><?php echo $cliente["email"]; ?></td>
+                    <td><?php echo $cliente["telefone"]; ?></td>
+                </tr>
+            <?php } ?>
+        </table>
+    <?php } else { ?>
+        <p>Nenhum cliente cadastrado.</p>
+    <?php } ?>
+</div>
 
-        echo "ID: " . $cliente["id_cliente"] . "<br>";
-        echo "Nome: " . $cliente["nome"] . "<br>";
-        echo "Email: " . $cliente["email"] . "<br>";
-        echo "Telefone: " . $cliente["telefone"] . "<br>";
-        echo "<hr>";
-
-    }
-
-} else {
-
-    echo "Nenhum cliente cadastrado.";
-
-}
-
-?>
+<?php include("../includes/footer.php"); ?>

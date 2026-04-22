@@ -3,6 +3,8 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 include("../conexao.php");
+include("../includes/header.php");
+include("../includes/menu.php");
 
 $sql = "SELECT * FROM produtos";
 $resultado = mysqli_query($conexao, $sql);
@@ -12,26 +14,32 @@ if (!$resultado) {
 }
 ?>
 
-<h1>Lista de Produtos</h1>
+<div class="container">
+    <h2>Lista de Produtos</h2>
 
-<?php
+    <a class="link-botao" href="cadastrar_produto.php">+ Novo Produto</a>
 
-if (mysqli_num_rows($resultado) > 0) {
+    <?php if (mysqli_num_rows($resultado) > 0) { ?>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th>Estoque</th>
+            </tr>
 
-    while ($produto = mysqli_fetch_assoc($resultado)) {
+            <?php while ($produto = mysqli_fetch_assoc($resultado)) { ?>
+                <tr>
+                    <td><?php echo $produto["id_produto"]; ?></td>
+                    <td><?php echo $produto["nome"]; ?></td>
+                    <td>R$ <?php echo number_format($produto["preco"], 2, ",", "."); ?></td>
+                    <td><?php echo $produto["estoque"]; ?></td>
+                </tr>
+            <?php } ?>
+        </table>
+    <?php } else { ?>
+        <p>Nenhum produto cadastrado.</p>
+    <?php } ?>
+</div>
 
-        echo "ID: " . $produto["id_produto"] . "<br>";
-        echo "Nome: " . $produto["nome"] . "<br>";
-        echo "Preço: " . $produto["preco"] . "<br>";
-        echo "Estoque: " . $produto["estoque"] . "<br>";
-        echo "<hr>";
-
-    }
-
-} else {
-
-    echo "Nenhum produto cadastrado.";
-
-}
-
-?>
+<?php include("../includes/footer.php"); ?>
