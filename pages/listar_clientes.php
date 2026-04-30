@@ -26,6 +26,7 @@ if (!$resultado) {
                 <th>Nome</th>
                 <th>Email</th>
                 <th>Telefone</th>
+                <th>Ações</th>
             </tr>
 
             <?php while ($cliente = mysqli_fetch_assoc($resultado)) { ?>
@@ -34,6 +35,14 @@ if (!$resultado) {
                     <td><?php echo $cliente["nome"]; ?></td>
                     <td><?php echo $cliente["email"]; ?></td>
                     <td><?php echo $cliente["telefone"]; ?></td>
+                    <td><?php echo $cliente["id_cliente"]; ?></td>
+                    <td><?php echo $cliente["nome"]; ?></td>
+                    <td><?php echo $cliente["email"]; ?></td>
+                    <td><?php echo $cliente["telefone"]; ?></td>
+                    <td>
+    <a class="link-botao" href="editar_cliente.php?id=<?php echo $cliente['id_cliente']; ?>">Editar</a>
+    <a class="link-botao" href="excluir_cliente.php?id=<?php echo $cliente['id_cliente']; ?>" onclick="return confirm('Tem certeza que deseja excluir este cliente?')">Excluir</a>
+</td>
                 </tr>
             <?php } ?>
         </table>

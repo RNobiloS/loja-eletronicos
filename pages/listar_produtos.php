@@ -26,6 +26,7 @@ if (!$resultado) {
                 <th>Nome</th>
                 <th>Preço</th>
                 <th>Estoque</th>
+                <th>Ações</th>
             </tr>
 
             <?php while ($produto = mysqli_fetch_assoc($resultado)) { ?>
@@ -34,6 +35,10 @@ if (!$resultado) {
                     <td><?php echo $produto["nome"]; ?></td>
                     <td>R$ <?php echo number_format($produto["preco"], 2, ",", "."); ?></td>
                     <td><?php echo $produto["estoque"]; ?></td>
+                    <td>
+    <a class="link-botao" href="editar_produto.php?id=<?php echo $produto['id_produto']; ?>">Editar</a>
+    <a class="link-botao" href="excluir_produto.php?id=<?php echo $produto['id_produto']; ?>" onclick="return confirm('Tem certeza que deseja excluir este produto?')">Excluir</a>
+</td>
                 </tr>
             <?php } ?>
         </table>
